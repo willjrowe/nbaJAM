@@ -15,14 +15,14 @@ while not (num_ot_valid):
     if num_ot.isdigit():
         num_ot_valid = True
     else:
-        print("Invalid input! Please enter a counting number.")
+        print("Invalid input! Please enter a whole number.")
 winner_score_valid = False
 while not (winner_score_valid):
     winner_score = input("Winner Score: ")
     if winner_score.isdigit():
         winner_score_valid = True
     else:
-        print("Invalid input! Please enter a counting number.")
+        print("Invalid input! Please enter a whole number.")
 loser_score_valid = False
 while not (loser_score_valid):
     loser_score = input("Loser Score: ")
