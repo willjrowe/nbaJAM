@@ -1,4 +1,5 @@
 import csv
+from tweet import TweetMachine
 
 teams = ["Hawks","Celtics","Bobcats","Bulls","Cavs","Mavericks","Nuggets","Pistons","Warriors","Rockets","Pacers","Clippers","Lakers","Grizzlies","Heat","Bucks","Timberwolves","Nets","Hornets","Knicks","Thunder","Magic","76ers","Suns","Trailblazers","Kings","Spurs","Raptors","Jazz","Wizards"]
 who_won_valid = False
@@ -83,3 +84,25 @@ if not (DONT_SAVE):
             josephTeam = loser_team
             josephResult = "L"
         nba_writer.writerow([josephTeam,josephResult,josephScore,willScore,willResult,willTeam])
+    
+    if ("W" in josephResult):
+        scoreDifferential = int(josephScore) - int(willScore)
+    else:
+        scoreDifferential = int(willScore) - int(josephScore)
+    keyPhrase = " narrowly defeated"
+    if (scoreDifferential > 5):
+        keyPhrase = " solidly beat"
+    if (scoreDifferential > 9):
+        keyPhrase = " blew out"
+    if (scoreDifferential > 13):
+        keyPhrase = " completely dominated"
+    if (scoreDifferential > 20):
+        keyPhrase = " straight embarassed"
+    if ("W" in josephResult):
+        finalPhrase = "Joseph who played as the " + josephTeam + keyPhrase + " Will who played as the " + willTeam + " with a final score of " + josephScore + " - " + willScore 
+    else:
+        finalPhrase = "Will who played as the " + willTeam + keyPhrase + " Joseph who played as the " + josephTeam + " with a final score of " + willScore + " - " + josephScore
+    gameReport = TweetMachine()
+    gameReport.makeATweet(finalPhrase)
+
+
