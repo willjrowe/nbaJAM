@@ -1,6 +1,3 @@
-"""
-Example script that enables using your one-time-free gamertag change
-"""
 import argparse
 import asyncio
 import os
@@ -65,15 +62,15 @@ async def async_main():
         xbl_client = XboxLiveClient(auth_mgr)
 
         try:
-            uniname = "c:/users/willr/downloads/UNIQUENAME2.mp4"
+            uniname = "c:/users/willr/downloads/UNIQUENAME7.mp4"
             resp = await xbl_client.gameclips.get_recent_own_clips(max_items=1)
             downloadLink = resp.game_clips[0].game_clip_uris[0].uri
             wget.download(downloadLink, uniname)
             clip = VideoFileClip(uniname).subclip(8)
-            clip.write_videofile("c:/users/willr/downloads/UNIQUENAME2-finished.mp4")
+            clip.write_videofile("c:/users/willr/downloads/UNIQUENAME7-finished.mp4",temp_audiofile='temp-audio.m4a', remove_temp=True, codec="libx264", audio_codec="aac")
             clip.close()
             highlightz = TweetMachine()
-            highlightz.makeAVidTweet('c:/users/willr/downloads/UNIQUENAME2-finished.mp4','audio test')
+            highlightz.makeAVidTweet('c:/users/willr/downloads/UNIQUENAME7-finished.mp4','audio test')
         except ClientResponseError:
             print("Invalid HTTP response")
             sys.exit(-1)
