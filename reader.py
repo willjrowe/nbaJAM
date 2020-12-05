@@ -1,7 +1,7 @@
 import csv
 from tweet import TweetMachine
 
-teams = ["Hawks","Celtics","Bobcats","Bulls","Cavs","Mavericks","Nuggets","Pistons","Warriors","Rockets","Pacers","Clippers","Lakers","Grizzlies","Heat","Bucks","Timberwolves","Nets","Hornets","Knicks","Thunder","Magic","76ers","Suns","Trailblazers","Kings","Spurs","Raptors","Jazz","Wizards"]
+teams = ["Republicans","Democrats","Hawks","Celtics","Bobcats","Bulls","Cavs","Mavericks","Nuggets","Pistons","Warriors","Rockets","Pacers","Clippers","Lakers","Grizzlies","Heat","Bucks","Timberwolves","Nets","Hornets","Knicks","Thunder","Magic","76ers","Suns","Trailblazers","Kings","Spurs","Raptors","Jazz","Wizards"]
 who_won_valid = False
 DONT_SAVE = False
 while not (who_won_valid):
@@ -67,7 +67,7 @@ else:
     otString = "-" + num_ot + "OT"
 #do the work
 if not (DONT_SAVE):
-    with open('NBA_JAM_copy.csv', mode='a', newline='') as nba_file:
+    with open('NBA_JAM.csv', mode='a', newline='') as nba_file:
         nba_writer = csv.writer(nba_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         if (who_won == "J"):
             josephScore = winner_score
