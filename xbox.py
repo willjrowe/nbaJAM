@@ -62,15 +62,15 @@ async def async_main():
         xbl_client = XboxLiveClient(auth_mgr)
 
         try:
-            uniname = "c:/users/willr/downloads/UNIQUENAME8.mp4"
+            uniname = "c:/users/willr/downloads/UNIQUENAME9.mp4"
             resp = await xbl_client.gameclips.get_recent_own_clips(max_items=1)
             downloadLink = resp.game_clips[0].game_clip_uris[0].uri
             wget.download(downloadLink, uniname)
             clip = VideoFileClip(uniname).subclip(8)
-            clip.write_videofile("c:/users/willr/downloads/UNIQUENAME8-finished.mp4",temp_audiofile='temp-audio.m4a', remove_temp=True, codec="libx264", audio_codec="aac")
+            clip.write_videofile("c:/users/willr/downloads/UNIQUENAME9-finished.mp4",temp_audiofile='temp-audio.m4a', remove_temp=True, codec="libx264", audio_codec="aac")
             clip.close()
             highlightz = TweetMachine()
-            highlightz.makeAVidTweet('c:/users/willr/downloads/UNIQUENAME8-finished.mp4','🚨🚨🚨BUZZER BEATER ALERT🚨🚨🚨')
+            highlightz.makeAVidTweet('c:/users/willr/downloads/UNIQUENAME9-finished.mp4','🚨🚨🚨BUZZER BEATER ALERT🚨🚨🚨')
         except ClientResponseError:
             print("Invalid HTTP response")
             sys.exit(-1)

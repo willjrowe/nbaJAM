@@ -1,0 +1,6 @@
+TO DO
+analyze stats screens from xbox screenshot to automate storing player stats
+automate tweeting game results
+deploy to vercel? server
+make a ui to interact in mobile browser
+show stats on browser (graphify js or whatever)

@@ -144,3 +144,30 @@ with open('NBA_JAM.csv') as csv_file:
     print("Will's lowest scoring game: " + str(min(willScoreArray)))
     print("Joseph's biggest win: " + str(willBiggestLoss))
     print("Will's biggest win: " + str(josephBiggestLoss))
+    josephTeamsDict = {}
+    willTeamsDict = {}
+    for i in range(0,len(josephWonArray)):
+        joTeam = josephTeamArray[i]
+        willTeam = willTeamArray[i]
+        if josephWonArray[i]:
+            #joseph won with this team
+            if willTeam in willTeamsDict:
+                willTeamsDict[willTeam]["losses"]+=1
+            else:
+                willTeamsDict[willTeam] = {"wins":0,"losses":1}
+            if joTeam in josephTeamsDict:
+                josephTeamsDict[joTeam]["wins"]+=1
+            else:
+                 josephTeamsDict[joTeam] = {"wins":1,"losses":0}
+        else:
+            #will won with this team
+            if willTeam in willTeamsDict:
+                willTeamsDict[willTeam]["wins"]+=1
+            else:
+                willTeamsDict[willTeam] = {"wins":1,"losses":0}
+            if joTeam in josephTeamsDict:
+                josephTeamsDict[joTeam]["losses"]+=1
+            else:
+                 josephTeamsDict[joTeam] = {"wins":0,"losses":1}
+    print("Joseph's Team Dict: "+str(josephTeamsDict))
+    print("Will's Team Dict: "+str(willTeamsDict))
