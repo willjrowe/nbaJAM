@@ -1,4 +1,5 @@
 TO DO
+maybe use custom characters for ocr??? seems annoying to find all the letters tho
 analyze stats screens from xbox screenshot to automate storing player stats
 automate tweeting game results
 deploy to vercel? server
