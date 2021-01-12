@@ -23,7 +23,7 @@ def cleanImage(image):
     image = cv2.threshold(image, 150, 255, cv2.THRESH_BINARY_INV)[1]
     return image
 
-def getPlayerDict(position) -> dict:
+def getPlayerDict(position,cleanImage,originalImage) -> dict:
     #CONSTANTS
     playerNameTopY = 714
     playerNameBottomY = 750
@@ -73,8 +73,10 @@ def getPlayerDict(position) -> dict:
         playerPicBottomX = 1595
 
     #get player name and confirm it is correct
-    playerNameIMG = mainIMG[playerNameTopY:playerNameBottomY,playerNameTopX:playerNameBottomX]
+    playerNameIMG = originalImage[playerNameTopY:playerNameBottomY,playerNameTopX:playerNameBottomX]
     playerName = pytesseract.image_to_string(playerNameIMG,config='--psm 7').strip().rstrip()
+    playerPic = originalImage[playerPicTopY:playerPicBottomY,playerPicTopX:playerPicBottomX]
+
     print("OCR detected Player Name: " + playerName)
     nameCheck = input("Is the above name correct? If so, input y. Otherwise input n:")
     if nameCheck == "n":
@@ -89,9 +91,9 @@ def getPlayerDict(position) -> dict:
         colTwoStat = ColTwoNames[i]
         rowTop = RowTopY[i]
         rowBottom = RowBottomY[i]
-        colOneimg = cleanedIMG[rowTop:rowBottom,colOneTopX:colOneBottomX]
+        colOneimg = cleanImage[rowTop:rowBottom,colOneTopX:colOneBottomX]
         colOneimgtext = pytesseract.image_to_string(colOneimg,config='-c tessedit_char_whitelist=0123456789 --psm 7').strip().rstrip()
-        colTwoimg = cleanedIMG[rowTop:rowBottom,colTwoTopX:colTwoBottomX]
+        colTwoimg = cleanImage[rowTop:rowBottom,colTwoTopX:colTwoBottomX]
         colTwoimgtext = pytesseract.image_to_string(colTwoimg,config='-c tessedit_char_whitelist=0123456789 --psm 7').strip().rstrip()
         if colOneimgtext not in "012345678910": 
             print("OCR detected invalid input for " + playerName +"'s " + colOneStat + " stat. Expected: integer 1 - 10. Got " + colOneimgtext)
@@ -103,17 +105,78 @@ def getPlayerDict(position) -> dict:
         playerDict[colTwoStat] = int(colTwoimgtext)
     
     print(playerDict)
-    playerPic = mainIMG[playerPicTopY:playerPicBottomY,playerPicTopX:playerPicBottomX]
-    cv2.imshow(playerName, playerPic)  
-    cv2.waitKey(3000)
-    cv2.destroyAllWindows()
     return playerDict
 
-mainIMG = cv2.imread("teamScreen.png",cv2.IMREAD_UNCHANGED)
-mainIMGcopy = mainIMG.copy()
-cleanedIMG = cleanImage(mainIMGcopy)
-getPlayerDict(1)
-getPlayerDict(2)
-getPlayerDict(3)
-getPlayerDict(4)
+# mainIMG = cv2.imread("statTest3.png",cv2.IMREAD_UNCHANGED)
+# mainIMGcopy = mainIMG.copy()
+# cleanedIMG = cleanImage(mainIMGcopy)
+# getPlayerDict(1,cleanedIMG)
+# getPlayerDict(2,cleanedIMG)
 
+#AW GEEZ I FORGOT ABOUT ASPECT RATIO
+def getPlayerDictVID(position,cleanImage,originalImage) -> dict:
+    #CONSTANTS
+    playerNameTopY = 474
+    playerNameBottomY = 496
+    RowTopY = [0, 509, 524, 539, 554, 569]#first zeros are for 0-indexing
+    RowBottomY = [0, 524, 539, 554, 569, 584]
+    ColOneNames = ["0-index","BLK","CTH","DRB","DNK","PAS"]
+    ColTwoNames = ["0-index","SPD","STL","STR","2PT","3PT"]
+    playerPicTopY = 348
+    playerPicBottomY = 468
+
+    #PLAYER DEPENDENT
+    if position == 1:
+        playerNameTopX = 225
+        playerNameBottomX = 392
+        colOneTopX = 326
+        colOneBottomX = 348
+        colTwoTopX = 391
+        colTwoBottomX = 413
+        playerPicTopX = 227
+        playerPicBottomX = 396
+    # elif position == 2:
+        # playerNameTopX = 
+        # playerNameBottomX = 
+        # colOneTopX = 
+        # colOneBottomX = 
+        # colTwoTopX = 
+        # colTwoBottomX = 
+        # playerPicTopX = 
+        # playerPicBottomX = 
+    #not using position 3 or 4 for now in this function
+
+    #get player name and confirm it is correct
+    playerNameIMG = originalImage[playerNameTopY:playerNameBottomY,playerNameTopX:playerNameBottomX]
+    playerName = pytesseract.image_to_string(playerNameIMG,config='--psm 7').strip().rstrip()
+    playerPic = originalImage[playerPicTopY:playerPicBottomY,playerPicTopX:playerPicBottomX]
+    
+    print("OCR detected Player Name: " + playerName)
+    nameCheck = input("Is the above name correct? If so, input y. Otherwise input n:")
+    if nameCheck == "n":
+        playerName = input("Please enter the correct name in all caps:") 
+    
+    playerDict = {}
+    playerDict["lastname"] = playerName
+
+    #get player stats and store in dict
+    for i in range(1,6):
+        colOneStat = ColOneNames[i]
+        colTwoStat = ColTwoNames[i]
+        rowTop = RowTopY[i]
+        rowBottom = RowBottomY[i]
+        colOneimg = cleanImage[rowTop:rowBottom,colOneTopX:colOneBottomX]
+        colOneimgtext = pytesseract.image_to_string(colOneimg,config='-c tessedit_char_whitelist=0123456789 --psm 7').strip().rstrip()
+        colTwoimg = cleanImage[rowTop:rowBottom,colTwoTopX:colTwoBottomX]
+        colTwoimgtext = pytesseract.image_to_string(colTwoimg,config='-c tessedit_char_whitelist=0123456789 --psm 7').strip().rstrip()
+        if colOneimgtext not in "012345678910" or colOneimgtext=="": 
+            print("OCR detected invalid input for " + playerName +"'s " + colOneStat + " stat. Expected: integer 1 - 10. Got " + colOneimgtext)
+            colOneimgtext = input("Please enter correct stat here:")
+        if colTwoimgtext not in "012345678910"or colTwoimgtext=="": 
+            print("OCR detected invalid input for " + playerName +"'s " + colTwoStat + " stat. Expected: integer 1 - 10. Got " + colTwoimgtext)
+            colTwoimgtext = input("Please enter correct stat here:")    
+        playerDict[colOneStat] = int(colOneimgtext)
+        playerDict[colTwoStat] = int(colTwoimgtext)
+    
+    print(playerDict)
+    return playerDict

@@ -63,8 +63,8 @@ async def async_main():
 
         try:
             uniname = "c:/users/willr/downloads/UNIQUENAME9.mp4"
-            resp = await xbl_client.screenshots.get_recent_own_screenshots(max_items=1)
-            # resp = await xbl_client.gameclips.get_recent_own_clips(max_items=1)
+            # resp = await xbl_client.screenshots.get_recent_own_screenshots(max_items=3)
+            resp = await xbl_client.gameclips.get_recent_own_clips(max_items=1)
             # downloadLink = resp.game_clips[0].game_clip_uris[0].uri
             # wget.download(downloadLink, uniname)
             # clip = VideoFileClip(uniname).subclip(8)
