@@ -113,6 +113,14 @@ def getPlayerDict(position,cleanImage,originalImage) -> dict:
 # getPlayerDict(1,cleanedIMG)
 # getPlayerDict(2,cleanedIMG)
 
+
+#color ranges for player names
+#(22,22,22) and up
+#it would be good to find egdes for this
+
+#color ranges for yellow text
+#(50,50,50) and up
+
 #AW GEEZ I FORGOT ABOUT ASPECT RATIO
 def getPlayerDictVID(position,cleanImage,originalImage) -> dict:
     #CONSTANTS
@@ -127,7 +135,7 @@ def getPlayerDictVID(position,cleanImage,originalImage) -> dict:
 
     #PLAYER DEPENDENT
     if position == 1:
-        playerNameTopX = 225
+        playerNameTopX = 230
         playerNameBottomX = 392
         colOneTopX = 326
         colOneBottomX = 348
@@ -135,22 +143,22 @@ def getPlayerDictVID(position,cleanImage,originalImage) -> dict:
         colTwoBottomX = 413
         playerPicTopX = 227
         playerPicBottomX = 396
-    # elif position == 2:
-        # playerNameTopX = 
-        # playerNameBottomX = 
-        # colOneTopX = 
-        # colOneBottomX = 
-        # colTwoTopX = 
-        # colTwoBottomX = 
-        # playerPicTopX = 
-        # playerPicBottomX = 
+    elif position == 2:
+        playerNameTopX = 444
+        playerNameBottomX = 611
+        colOneTopX = 546
+        colOneBottomX = 569
+        colTwoTopX = 612
+        colTwoBottomX = 634
+        playerPicTopX = 448
+        playerPicBottomX = 615
     #not using position 3 or 4 for now in this function
 
     #get player name and confirm it is correct
     playerNameIMG = originalImage[playerNameTopY:playerNameBottomY,playerNameTopX:playerNameBottomX]
     playerName = pytesseract.image_to_string(playerNameIMG,config='--psm 7').strip().rstrip()
     playerPic = originalImage[playerPicTopY:playerPicBottomY,playerPicTopX:playerPicBottomX]
-    
+    cv2.imwrite("playerHeadshot.png",playerPic)
     print("OCR detected Player Name: " + playerName)
     nameCheck = input("Is the above name correct? If so, input y. Otherwise input n:")
     if nameCheck == "n":
