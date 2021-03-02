@@ -22,7 +22,7 @@ def getSimilarity(A,B) -> float:
     print(cv2.matchTemplate(A,B))
 
 def getAllPlayerDicts(image):
-    for i in range(1,5):
+    for i in range(1,3):
         getPlayerDict(i,image)
 
 
