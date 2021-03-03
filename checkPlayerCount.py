@@ -8,6 +8,14 @@ team_completer = WordCompleter(["NBA Street","Nimble Ninjas","Honey Badgers","Va
 
 teams = ["NBA Street","Nimble Ninjas","Honey Badgers","Vancouver Stickman","Team EA","SSX","Beastie Boys","Athens Panathinaikos","Maccabi Electra","Siena Montepaschi","Dunk Champs","Sad Pandas","Fast Breaks","Dime Droppers","Angry Mascots","Real Madrid","Rainmakers","Block Party","Full Court Press","Cover Kings","Supersonics","Republicans","Democrats","Hawks","Celtics","Bobcats","Bulls","Cavs","Mavericks","Nuggets","Pistons","Warriors","Rockets","Pacers","Clippers","Lakers","Grizzlies","Heat","Bucks","Timberwolves","Nets","Hornets","Knicks","Thunder","Magic","76ers","Suns","Trailblazers","Kings","Spurs","Raptors","Jazz","Wizards"]
 
+total_players = 0
+for team in teams:
+    path, dirs, files = next(os.walk("./headshots/"+team))
+    file_count = len(files)
+    total_players+=file_count
+print("Total players: " + str(total_players))
+
+
 while True:
     team_valid = False
     while not (team_valid):
