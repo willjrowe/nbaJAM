@@ -3,12 +3,12 @@ import numpy as np
 import os
 from BESTSTATSREADER import getAllPlayerDicts
 
-vid = cv2.VideoCapture("./5min.mp4")
+vid = cv2.VideoCapture("./5min2.mp4")
 
 if (vid.isOpened()==False):
     print("ERROR OPENNING FILE")
 
-pos = 277300
+pos = 295200
 
 while (vid.isOpened()):
     vid.set(cv2.CAP_PROP_POS_MSEC, pos)
